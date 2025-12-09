@@ -10,9 +10,13 @@ jobs:
         runs-on: ubuntu-latest
         steps:
             - name: "Setup Node JS"
-              uses: actions/setup-node@v4
+              uses: actions/setup-node@v4 # Use the latest version of setup-node action (predefined by GitHub)
               with:
                 node-version: "21"
 
             - name: "Check node version"
               run: node --version
+
+            - name: "Clone the repository"
+              uses: actions/checkout@v4 # Use the latest version of checkout action (predefined by GitHub)
+              
