@@ -19,4 +19,6 @@ jobs:
 
             - name: "Clone the repository"
               uses: actions/checkout@v4 # Use the latest version of checkout action (predefined by GitHub)
-              
+
+            - name: "Install dependencies"
+              run: npm install
