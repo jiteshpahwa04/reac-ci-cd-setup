@@ -1,5 +1,11 @@
 pipeline {
     agent any
+
+    environment {
+        NODE_ENV = 'production'
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
+    }
+
     options {
         skipDefaultCheckout(true)
     }
@@ -56,6 +62,23 @@ pipeline {
                 sh '''
                     ls -la
                     npm test
+                '''
+            }
+        }
+
+        stage ('Deploy') {
+            agent {
+                docker {
+                    image 'node:22.11.0-alpine3.20'
+                    args '-u root'
+                    reuseNode true // Reuse the same workspace on the agent
+                }
+            }
+
+            steps {
+                sh '''
+                    npm install -g vercel
+                    vercel --prod --token=$VERCEL_TOKEN --confirm --name=cicd-jenkins-example
                 '''
             }
         }
