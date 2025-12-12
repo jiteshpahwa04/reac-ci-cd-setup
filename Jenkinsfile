@@ -28,6 +28,14 @@ pipeline {
             }
         }
 
+        stage ('Take Approval') {
+            steps {
+                timeout(time: 1, units: 'HOURS') {
+                    input message: 'Do you want to proceed?', ok: 'Yes, proceed'
+                }
+            }
+        }
+
         stage ('Build') {
             agent {
                 docker {
